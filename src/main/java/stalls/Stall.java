@@ -1,6 +1,7 @@
 package stalls;
 
 import behaviours.IReviewed;
+import people.Visitor;
 
 public abstract class Stall implements IReviewed {
 
@@ -29,4 +30,9 @@ public abstract class Stall implements IReviewed {
     public int getRating() {
         return this.getRating();
     }
+
+    public boolean isAllowedTo(Visitor visitor) {
+            return true;
+        }
+
 }

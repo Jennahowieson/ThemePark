@@ -2,21 +2,27 @@ package manager;
 
 import attractions.Attraction;
 import behaviours.IReviewed;
-import org.w3c.dom.Attr;
+import behaviours.ISecurity;
 import people.Visitor;
 
-import java.util.ArrayList;
+import java.util.*;
 
-public class ThemePark implements IReviewed {
+public class ThemePark {
     private ArrayList<IReviewed> allReviewed;
     private IReviewed iReviewed;
+    private HashMap<String, Integer> allReviews;
 
     public ThemePark() {
         this.allReviewed = new ArrayList<IReviewed>();
+        this.allReviews = new HashMap<String, Integer>();
     }
 
     public ArrayList<IReviewed> getAllReviewed() {
         return allReviewed;
+    }
+
+    public HashMap<String, Integer> getAllReviews() {
+        return allReviews;
     }
 
     public void setAllReviewed(ArrayList<IReviewed> allReviewed) {
@@ -31,12 +37,23 @@ public class ThemePark implements IReviewed {
         return null;
     }
 
-    public void addToReviewedList(IReviewed iReviewed){
+    public void addToReviewedList(IReviewed iReviewed) {
         allReviewed.add(iReviewed);
     }
 
     public void visit(Visitor visitor, Attraction attraction) {
         visitor.markAsVisited(attraction);
         attraction.increaseVisitCountBy1();
+    }
+
+
+    public ArrayList<IReviewed> getAllAllowedFor(Visitor visitor) {
+        ArrayList<IReviewed> canGoOn = new ArrayList<IReviewed>();
+        for (IReviewed i : getAllReviewed()) {
+            if (i.isAllowedTo(visitor) == true) {
+                canGoOn.add(i);
+            }
+        }
+        return canGoOn;
     }
 }
